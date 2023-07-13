@@ -12,7 +12,8 @@ const ui = {
     displays: {
         main: document.querySelector('#main-display'),
         sign: document.querySelector('#sign-display'),
-        
+        readyToClear: false,
+
         get displayNumber() { 
             const neg = !!this.sign.innerHTML;
             const num = neg ? -Number(ui.displays.main.textContent) : Number(ui.displays.main.textContent);
@@ -25,7 +26,7 @@ const ui = {
         },
 
         updateMain(number) {
-            const newText = String(number).slice(0, 11);
+            const newText = String(number).slice(0, 10);
             this.main.textContent = newText;
         },
 
@@ -92,12 +93,40 @@ function addButtonClickListeners() {
     ui.buttons.equals.addEventListener('click', () => resolveEqualsClick());
 };
 
-function resolveDigitClick(digit) { 
-    console.log(digit);
+function resolveDigitClick(digit) {
+    if (ui.displays.readyToClear) {
+        ui.displays.clear();
+        ui.displays.readyToClear = false;
+    };
+    const displayString = String(Math.abs(ui.displays.displayNumber));
+    if (displayString.length < 10) {
+        const newDisplayNumber = Number(displayString + digit);
+        ui.displays.updateMain(newDisplayNumber);
+        memory.storeNumber(ui.displays.displayNumber);
+    };
 };
 
 function resolveOperationClick(buttonID) {
-    console.log(buttonID);
+    resolveEqualsClick();
+    if (memory.firstNumber != null) {
+        switch (buttonID) {
+            case 'add-button':
+                memory.operation = 'add';
+                break;
+            case 'subtract-button':
+                memory.operation = 'subtract';
+                break;
+            case 'multiply-button':
+                memory.operation = 'multiply';
+                break;
+            case 'divide-button':
+                memory.operation = 'divide';
+                break;
+            case 'power-button':
+                memory.operation = 'power';
+        };
+        ui.displays.readyToClear = true;
+    };
 };
 
 function resolveNegativeClick() {
@@ -128,6 +157,7 @@ function resolveEqualsClick() {
         };
         ui.displays.updateMain(Math.abs(result));
         memory.storeNumber(result);
+        ui.displays.readyToClear = true;
     }
 };
 
