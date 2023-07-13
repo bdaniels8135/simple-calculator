@@ -19,7 +19,7 @@ body {
 }
 
 .container.header, .container.footer {
-    background-color: rgb(170, 45, 45);
+    background-color: rgb(200, 50, 50);
 }
 
 .text.header {
@@ -70,6 +70,22 @@ body {
     border: 1px solid black;
     font-size: 200%;
     padding: 4px;
+}
+
+.button.digit {
+    background-color: lightgray;
+}
+
+.button.clear {
+    background-color: rgb(200, 50, 50);
+}
+
+.button.ops {
+    background-color: gray;
+}
+
+.button.equals {
+    background-color: rgb(50, 50, 200);
 }
 
 .footer {

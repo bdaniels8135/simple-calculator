@@ -15,41 +15,41 @@
         <div class="container calculator">
             <div class="container calculator-display">
                 <div class="container calculator-sign-display">
-                    <div class="text calculator-sign-display">&minus;</div>
+                    <div class="text calculator-sign-display" id="sign-display">&minus;</div>
                 </div>
                 <div class="container calculator-main-display">
-                    <div class="text calculator-main-display">9.999999999</div>
+                    <div class="text calculator-main-display" id="main-display">9.999999999</div>
                 </div>    
             </div>
             <div class="container calculator-row">
-                <button class="button calculator-button">C</button>
-                <button class="button calculator-button">&larr;</button>
-                <button class="button calculator-button">x<sup> y </sup></button>
-                <button class="button calculator-button">&divide;</button>
+                <button class="button calculator-button clear" id="clear-button">C</button>
+                <button class="button calculator-button clear" id="backspace-button">&#9003;</button>
+                <button class="button calculator-button ops" id="power-button">x<sup> y </sup></button>
+                <button class="button calculator-button ops" id="divide-button">&divide;</button>
             </div>
             <div class="container calculator-row">
-                <button class="button calculator-button">7</button>
-                <button class="button calculator-button">8</button>
-                <button class="button calculator-button">9</button>
-                <button class="button calculator-button">&times;</button>
+                <button class="button calculator-button digit">7</button>
+                <button class="button calculator-button digit">8</button>
+                <button class="button calculator-button digit">9</button>
+                <button class="button calculator-button ops" id="times-button">&times;</button>
             </div>
             <div class="container calculator-row">
-                <button class="button calculator-button">4</button>
-                <button class="button calculator-button">5</button>
-                <button class="button calculator-button">6</button>
-                <button class="button calculator-button">&minus;</button>
+                <button class="button calculator-button digit">4</button>
+                <button class="button calculator-button digit">5</button>
+                <button class="button calculator-button digit">6</button>
+                <button class="button calculator-button ops" id="minus-button">&minus;</button>
             </div>
             <div class="container calculator-row">
-                <button class="button calculator-button">1</button>
-                <button class="button calculator-button">2</button>
-                <button class="button calculator-button">3</button>
-                <button class="button calculator-button">&plus;</button>
+                <button class="button calculator-button digit">1</button>
+                <button class="button calculator-button digit">2</button>
+                <button class="button calculator-button digit">3</button>
+                <button class="button calculator-button ops" id="plus-button">&plus;</button>
             </div>
             <div class="container calculator-row">
-                <button class="button calculator-button">0</button>
-                <button class="button calculator-button">&plus;/&minus;</button>
-                <button class="button calculator-button">&#8729;</button>
-                <button class="button calculator-button">&equals;</button>
+                <button class="button calculator-button digit">0</button>
+                <button class="button calculator-button ops" id="negative-button">&plus;/&minus;</button>
+                <button class="button calculator-button ops" id="decimal-button">&#8729;</button>
+                <button class="button calculator-button equals" id="equals-button">&equals;</button>
             </div>
         </div>
     </main>
