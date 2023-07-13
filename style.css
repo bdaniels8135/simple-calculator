@@ -19,7 +19,7 @@ body {
 }
 
 .container.header, .container.footer {
-    background-color: rgb(200, 50, 50);
+    background-color: rgb(200, 75, 75);
 }
 
 .text.header {
@@ -70,6 +70,7 @@ body {
     border: 1px solid black;
     font-size: 200%;
     padding: 4px;
+    font-weight: 600;
 }
 
 .button.digit {
@@ -77,7 +78,7 @@ body {
 }
 
 .button.clear {
-    background-color: rgb(200, 50, 50);
+    background-color: rgb(200, 75, 75);
 }
 
 .button.ops {
@@ -85,7 +86,11 @@ body {
 }
 
 .button.equals {
-    background-color: rgb(50, 50, 200);
+    background-color: rgb(75, 75, 200);
+}
+
+#negative-button, #backspace-button, #power-button {
+    font-size: 175%;
 }
 
 .footer {
