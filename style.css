@@ -81,7 +81,7 @@ body {
     background-color: rgb(200, 75, 75);
 }
 
-.button.ops {
+.button.operation, .button.negative, .button.decimal {
     background-color: gray;
 }
 
