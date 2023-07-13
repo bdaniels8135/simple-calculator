@@ -55,6 +55,15 @@ const ui = {
         displayZeroDivision() {
             this.main.innerHTML = '&#128293;&#128293;&#128293;&#128293;';
         },
+
+        backspace() {
+            const backspacedText = this.main.innerHTML.split('').slice(0,-2).join('')
+            if (backspacedText !== '') {
+                this.updateMain(Number(backspacedText));
+            } else {
+                this.updateMain(0);
+            };
+        },
     },
 };
 
@@ -167,7 +176,8 @@ function resolveClearClick() {
 };
 
 function resolveBackspaceClick() {
-    alert('Sorry the backspace button is still under construction!');
+    if (ui.displays.readyToClear) return;
+    ui.displays.backspace()
 };
 
 function resolveEqualsClick() {
