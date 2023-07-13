@@ -13,6 +13,11 @@ const ui = {
         main: document.querySelector('#main-display'),
         sign: document.querySelector('#sign-display'),
         
+        clear() {
+            this.main.textContent = '';
+            this.sign.innerHTML = '';
+        },
+
         updateMain(newText) {
             this.main.textContent = newText;
         },
@@ -31,11 +36,24 @@ const memory = {
     firstNumber: null,
     operation: null,
     secondNumber: null, 
+    negativeActive: false,
 
-    reset() {
+    get readyToOperate() {
+        return !(!this.firstNumber || !this.operation || !this.secondNumber);
+    },
+
+    clear() {
         this.firstNumber = null;
         this.operation = null;
         this.secondNumber = null;
+    },
+
+    storeNumber(num) {
+        if (!this.operation) {
+            this.firstNumber = num; 
+        } else {
+            this.secondNumber = num;
+        }
     },
 
     operate() {
@@ -87,23 +105,32 @@ function resolveOperationClick(buttonID) {
 };
 
 function resolveNegativeClick() {
-    console.log('Negative button clicked.');
+    ui.displays.toggleSign();
 };
 
 function resolveDecimalClick() {
-    console.log('Decimal button clicked.');
+    alert('Sorry the decimal button is still under construction!');
 };
 
 function resolveClearClick() {
-    console.log('Clear button clicked.');
+    memory.clear();
+    ui.displays.clear();
 };
 
 function resolveBackspaceClick() {
-    console.log('Backspace button clicked.');
+    alert('Sorry the backspace button is still under construction!');
 };
 
 function resolveEqualsClick() {
-    console.log('Equals button clicked.');
+    if (memory.readyToOperate) {
+        const result = memory.operate();
+        memory.clear();
+        ui.displays.clear();
+        if (result < 0) {
+            ui.displays.toggleSign();
+        };
+        ui.displays.updateMain(String(Math.abs(result)));
+    }
 };
 
 document.addEventListener('DOMContentLoaded', () => {
