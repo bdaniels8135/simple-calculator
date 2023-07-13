@@ -22,7 +22,7 @@ const ui = {
                 this.sign.innerHTML = '';
             } else {
                 this.sign.innerHTML = '&minus;';
-            }
+            };
         },
     },
 };
@@ -56,7 +56,6 @@ const memory = {
             case 'power':
                 result = this.firstNumber ** this.secondNumber;
         }
-        this.reset();
         return result;
     },
 };
@@ -88,24 +87,24 @@ function resolveOperationClick(buttonID) {
 };
 
 function resolveNegativeClick() {
-    console.log('Negative button clicked.')
-}
+    console.log('Negative button clicked.');
+};
 
 function resolveDecimalClick() {
-    console.log('Decimal button clicked.')
-}
+    console.log('Decimal button clicked.');
+};
 
 function resolveClearClick() {
-    console.log('Clear button clicked.')
-}
+    console.log('Clear button clicked.');
+};
 
 function resolveBackspaceClick() {
-    console.log('Backspace button clicked.')
-}
+    console.log('Backspace button clicked.');
+};
 
 function resolveEqualsClick() {
-    console.log('Equals button clicked.')
-}
+    console.log('Equals button clicked.');
+};
 
 document.addEventListener('DOMContentLoaded', () => {
     addButtonClickListeners();
