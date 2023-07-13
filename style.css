@@ -43,7 +43,7 @@ body {
 .container.calculator-display {
     flex: 1 1 75px;
     border: 2px solid black;
-    font-size: 250%;
+    font-size: 225%;
 }
 
 .container.calculator-sign-display{
