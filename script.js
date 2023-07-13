@@ -126,7 +126,7 @@ function resolveEqualsClick() {
         if (result < 0) {
             ui.displays.toggleSign();
         };
-        ui.displays.updateMain(String(Math.abs(result)));
+        ui.displays.updateMain(Math.abs(result));
         memory.storeNumber(result);
     }
 };
