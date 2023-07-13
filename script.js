@@ -21,6 +21,10 @@ const ui = {
                 operation.classList.remove('active');
             };
         },
+
+        toggleDecimal() {
+            this.decimal.classList.toggle('active');
+        },
     },
 
     displays: {
@@ -86,6 +90,7 @@ const memory = {
     firstNumber: null,
     operation: null,
     secondNumber: null, 
+    decimalActive: false,
 
     get readyToOperate() { return this.firstNumber != null && !!this.operation && this.secondNumber != null },
 
@@ -93,6 +98,10 @@ const memory = {
         this.firstNumber = 0;
         this.operation = null;
         this.secondNumber = null;
+    },
+
+    toggleDecimal() {
+        this.decimalActive = !this.decimalActive;
     },
 
     storeNumber(num) {
@@ -127,11 +136,13 @@ function addButtonClickListeners() {
             resolveDigitClick(Number(button.textContent));
         });
     };
+    
     for (let button of ui.buttons.operations) {
         button.addEventListener('click', () => {
             resolveOperationClick(button.id);
         });
     };
+    
     ui.buttons.negative.addEventListener('click', () => resolveNegativeClick());
     ui.buttons.decimal.addEventListener('click', () => resolveDecimalClick());
     ui.buttons.clear.addEventListener('click', () => resolveClearClick());
@@ -145,15 +156,23 @@ function resolveDigitClick(digit) {
         ui.displays.readyToClear = false;
     };
     const displayString = String(Math.abs(ui.displays.displayNumber));
-    if (displayString.length < 10) {
-        const newDisplayNumber = Number(displayString + digit);
-        ui.displays.updateMain(newDisplayNumber);
-        memory.storeNumber(ui.displays.displayNumber);
+    if (displayString.length >= 10) return;
+    let newDisplayNumber;
+    if (memory.decimalActive) {
+        newDisplayNumber = Number(displayString + '.' + digit);
+        resolveDecimalClick();
+    } else {
+        newDisplayNumber = Number(displayString + digit);
     };
+    ui.displays.updateMain(newDisplayNumber);
+    memory.storeNumber(ui.displays.displayNumber);
 };
 
 function resolveOperationClick(buttonID) {
     resolveEqualsClick();
+    if (memory.decimalActive) {
+        resolveDecimalClick();
+    };
     if (memory.firstNumber != null) {
         switch (buttonID) {
             case 'add-button':
@@ -184,16 +203,24 @@ function resolveNegativeClick() {
 };
 
 function resolveDecimalClick() {
-    alert('Sorry the decimal button is still under construction!');
+    if (ui.displays.displayNumber.toString().split('').slice(0,-1).includes('.') && !ui.displays.readyToClear) return;
+    ui.buttons.toggleDecimal();
+    memory.toggleDecimal();
 };
 
 function resolveClearClick() {
     memory.clear();
     ui.displays.clear();
+    if (memory.decimalActive) {
+        resolveDecimalClick();
+    };
 };
 
 function resolveBackspaceClick() {
     if (ui.displays.readyToClear) return;
+    if (memory.decimalActive) {
+        resolveDecimalClick();
+    };
     ui.displays.backspace()
 };
 
@@ -209,6 +236,9 @@ function resolveEqualsClick() {
     memory.clear();
     ui.displays.clear();
     ui.displays.readyToClear = true;
+    if (memory.decimalActive) {
+        resolveDecimalClick();
+    };
 
     if (Math.abs(result) < 0.000000001 && result !== 0) {
         ui.displays.displayUnderflow();
