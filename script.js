@@ -40,7 +40,7 @@ const memory = {
     operation: null,
     secondNumber: null, 
 
-    get readyToOperate() { return !(!this.firstNumber || !this.operation || !this.secondNumber) },
+    get readyToOperate() { return this.firstNumber != null && !!this.operation && this.secondNumber != null },
 
     clear() {
         this.firstNumber = null;
