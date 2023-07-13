@@ -16,12 +16,12 @@ const ui = {
 
         get displayNumber() { 
             const neg = !!this.sign.innerHTML;
-            const num = neg ? -Number(ui.displays.main.textContent) : Number(ui.displays.main.textContent);
+            const num = neg ? -Number(ui.displays.main.innerHTML) : Number(ui.displays.main.innerHTML);
             return num;
         },
 
         clear() {
-            this.main.textContent = '';
+            this.main.innerHTML = '';
             this.sign.innerHTML = '';
         },
 
@@ -34,7 +34,7 @@ const ui = {
                 num *= 10**exponent;
                 newTextContent = `0.${Array(exponent).join('0')}${num.toString()}`.slice(0,10);
             }       
-            this.main.textContent = newTextContent;
+            this.main.innerHTML = newTextContent;
         },
 
         toggleSign() {
@@ -42,11 +42,15 @@ const ui = {
         },
 
         displayOverflow() {
-            this.main.textContent = 'OVERFLOW';
+            this.main.innerHTML = 'OVERFLOW';
         },
 
         displayUnderflow() {
-            this.main.textContent = 'UNDERFLOW';
+            this.main.innerHTML = 'UNDERFLOW';
+        },
+
+        displayZeroDivision() {
+            this.main.innerHTML = '&#128293;&#128293;&#128293;&#128293;';
         },
     },
 };
@@ -165,6 +169,11 @@ function resolveBackspaceClick() {
 function resolveEqualsClick() {
     if (!memory.readyToOperate) return;
     
+    if (memory.operation === 'divide' && memory.secondNumber === 0) {
+        ui.displays.displayZeroDivision();
+        return;
+    };
+
     const result = memory.operate();
     memory.clear();
     ui.displays.clear();
