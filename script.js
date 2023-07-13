@@ -21,7 +21,7 @@ const ui = {
         },
 
         clear() {
-            this.main.innerHTML = '';
+            this.main.innerHTML = '0.';
             this.sign.innerHTML = '';
         },
 
@@ -66,7 +66,7 @@ const memory = {
     get readyToOperate() { return this.firstNumber != null && !!this.operation && this.secondNumber != null },
 
     clear() {
-        this.firstNumber = null;
+        this.firstNumber = 0;
         this.operation = null;
         this.secondNumber = null;
     },
@@ -152,6 +152,7 @@ function resolveOperationClick(buttonID) {
 };
 
 function resolveNegativeClick() {
+    if (ui.displays.readyToClear) return;
     ui.displays.toggleSign();
     memory.storeNumber(ui.displays.displayNumber);
 };
@@ -182,7 +183,7 @@ function resolveEqualsClick() {
     ui.displays.clear();
     ui.displays.readyToClear = true;
 
-    if (Math.abs(result) < 0.000000001) {
+    if (Math.abs(result) < 0.000000001 && result !== 0) {
         ui.displays.displayUnderflow();
         return;
     };
