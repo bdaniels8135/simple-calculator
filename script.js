@@ -7,6 +7,20 @@ const ui = {
         clear: document.querySelector('#clear-button'),
         backspace: document.querySelector('#backspace-button'),
         equals: document.querySelector('#equals-button'),
+
+        setActiveOperation(buttonID) {
+            for (let operation of this.operations){
+                if (operation.id === buttonID) {
+                    operation.classList.add('active');
+                };
+            };
+        },
+
+        clearActiveOperation() {
+            for (let operation of this.operations) {
+                operation.classList.remove('active');
+            };
+        },
     },
 
     displays: {
@@ -22,6 +36,7 @@ const ui = {
 
         clear() {
             this.main.innerHTML = '0.';
+            ui.buttons.clearActiveOperation();
             this.sign.innerHTML = '';
         },
 
@@ -156,6 +171,8 @@ function resolveOperationClick(buttonID) {
             case 'power-button':
                 memory.operation = 'power';
         };
+        ui.buttons.clearActiveOperation();
+        ui.buttons.setActiveOperation(buttonID);
         ui.displays.readyToClear = true;
     };
 };

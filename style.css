@@ -85,6 +85,10 @@ body {
     background-color: gray;
 }
 
+.button.active {
+    background-color: rgb(170,170,170);
+}
+
 .button.equals {
     background-color: rgb(75, 75, 200);
 }
