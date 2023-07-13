@@ -29,7 +29,10 @@ const ui = {
             let newTextContent;
             const exponent = Number(num.toString().split('e-')[1]);
             if (!exponent) {
-                newTextContent = String(num).slice(0, 10);
+                newTextContent = String(num).slice(0, 11);
+                if (!newTextContent.split('').includes('.')) {
+                    newTextContent += '.';
+                };
             } else {
                 num *= 10**exponent;
                 newTextContent = `0.${Array(exponent).join('0')}${num.toString()}`.slice(0,10);
@@ -179,7 +182,7 @@ function resolveEqualsClick() {
     ui.displays.clear();
     ui.displays.readyToClear = true;
 
-    if (Math.abs(result) < 0.00000001) {
+    if (Math.abs(result) < 0.000000001) {
         ui.displays.displayUnderflow();
         return;
     };
