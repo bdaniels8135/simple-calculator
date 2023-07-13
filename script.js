@@ -25,13 +25,28 @@ const ui = {
             this.sign.innerHTML = '';
         },
 
-        updateMain(number) {
-            const newText = String(number).slice(0, 10);
-            this.main.textContent = newText;
+        updateMain(num) {
+            let newTextContent;
+            const exponent = Number(num.toString().split('e-')[1]);
+            if (!exponent) {
+                newTextContent = String(num).slice(0, 10);
+            } else {
+                num *= 10**exponent;
+                newTextContent = `0.${Array(exponent).join('0')}${num.toString()}`.slice(0,10);
+            }       
+            this.main.textContent = newTextContent;
         },
 
         toggleSign() {
             this.sign.innerHTML = this.sign.innerHTML ? '' : '&minus;';
+        },
+
+        displayOverflow() {
+            this.main.textContent = 'OVERFLOW';
+        },
+
+        displayUnderflow() {
+            this.main.textContent = 'UNDERFLOW';
         },
     },
 };
@@ -148,17 +163,29 @@ function resolveBackspaceClick() {
 };
 
 function resolveEqualsClick() {
-    if (memory.readyToOperate) {
-        const result = memory.operate();
-        memory.clear();
-        ui.displays.clear();
-        if (result < 0) {
-            ui.displays.toggleSign();
-        };
-        ui.displays.updateMain(Math.abs(result));
-        memory.storeNumber(result);
-        ui.displays.readyToClear = true;
-    }
+    if (!memory.readyToOperate) return;
+    
+    const result = memory.operate();
+    memory.clear();
+    ui.displays.clear();
+    ui.displays.readyToClear = true;
+
+    if (Math.abs(result) < 0.00000001) {
+        ui.displays.displayUnderflow();
+        return;
+    };
+    
+    if (Math.abs(result) > 9999999999) {
+        ui.displays.displayOverflow();
+        return;
+    };
+
+    if (result < 0) {
+        ui.displays.toggleSign();
+    };
+
+    ui.displays.updateMain(Math.abs(result));
+    memory.storeNumber(result);
 };
 
 document.addEventListener('DOMContentLoaded', () => {
