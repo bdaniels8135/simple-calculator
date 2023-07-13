@@ -13,21 +13,24 @@ const ui = {
         main: document.querySelector('#main-display'),
         sign: document.querySelector('#sign-display'),
         
+        get displayNumber() { 
+            const neg = !!this.sign.innerHTML;
+            const num = neg ? -Number(ui.displays.main.textContent) : Number(ui.displays.main.textContent);
+            return num;
+        },
+
         clear() {
             this.main.textContent = '';
             this.sign.innerHTML = '';
         },
 
-        updateMain(newText) {
+        updateMain(number) {
+            const newText = String(number).slice(0, 11);
             this.main.textContent = newText;
         },
 
         toggleSign() {
-            if (this.sign.innerHTML) {
-                this.sign.innerHTML = '';
-            } else {
-                this.sign.innerHTML = '&minus;';
-            };
+            this.sign.innerHTML = this.sign.innerHTML ? '' : '&minus;';
         },
     },
 };
@@ -36,11 +39,8 @@ const memory = {
     firstNumber: null,
     operation: null,
     secondNumber: null, 
-    negativeActive: false,
 
-    get readyToOperate() {
-        return !(!this.firstNumber || !this.operation || !this.secondNumber);
-    },
+    get readyToOperate() { return !(!this.firstNumber || !this.operation || !this.secondNumber) },
 
     clear() {
         this.firstNumber = null;
@@ -49,11 +49,7 @@ const memory = {
     },
 
     storeNumber(num) {
-        if (!this.operation) {
-            this.firstNumber = num; 
-        } else {
-            this.secondNumber = num;
-        }
+        this.operation ? this.secondNumber = num : this.firstNumber = num;
     },
 
     operate() {
@@ -73,7 +69,7 @@ const memory = {
                 break;
             case 'power':
                 result = this.firstNumber ** this.secondNumber;
-        }
+        };
         return result;
     },
 };
@@ -96,7 +92,7 @@ function addButtonClickListeners() {
     ui.buttons.equals.addEventListener('click', () => resolveEqualsClick());
 };
 
-function resolveDigitClick(digit) {
+function resolveDigitClick(digit) { 
     console.log(digit);
 };
 
@@ -106,6 +102,7 @@ function resolveOperationClick(buttonID) {
 
 function resolveNegativeClick() {
     ui.displays.toggleSign();
+    memory.storeNumber(ui.displays.displayNumber);
 };
 
 function resolveDecimalClick() {
@@ -130,6 +127,7 @@ function resolveEqualsClick() {
             ui.displays.toggleSign();
         };
         ui.displays.updateMain(String(Math.abs(result)));
+        memory.storeNumber(result);
     }
 };
 
